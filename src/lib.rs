@@ -254,6 +254,7 @@ macro_rules! implement_common {
             fn shl_assign(&mut self, rhs: T) {
                 *self = self.mask();
                 self.0.shl_assign(rhs);
+                *self = self.mask();
             }
         }
 
