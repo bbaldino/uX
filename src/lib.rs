@@ -383,6 +383,17 @@ macro_rules! implement_common {
                 self.wrapping_sub(other)
             }
         }
+
+        impl lib::core::ops::Mul<$name> for $name {
+            type Output = $name;
+
+            fn mul(self, rhs: $name) -> Self::Output {
+                match self.0 * rhs.0 {
+                    v if v > Self::MAX.0 => panic!("attempt to multiply with overflow"),
+                    v => $name(v).mask(),
+                }
+            }
+        }
     };
 }
 
@@ -965,5 +976,10 @@ mod tests {
             SEVEN => panic!("Pattern matching failed (7 == 42?)"),
             _ => (),
         }
+    }
+
+    fn test_mul() {
+        assert_eq!(u1(1) * u1(1), u1(1));
+        assert_eq!(u7(63) * u7(2), u7(126));
     }
 }
