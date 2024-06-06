@@ -1792,15 +1792,15 @@ mod tests {
 
     #[test]
     fn test_fallible_conversion_unsigned() {
-        assert_eq!(u16::try_from(u9(12)), Ok(12u16));
-        assert_eq!(u32::try_from(u9(12)), Ok(12u32));
+        assert_eq!(u7::try_from(u9(12)), Ok(u7(12)));
+        assert_eq!(u9::try_from(u10(12)), Ok(u9(12)));
 
-        assert_eq!(127u8.try_into(), Ok(u9(127)));
+        assert_eq!(127u16.try_into(), Ok(u9(127)));
 
-        assert_eq!(u7::try_from(u6(65)), Ok(u7(65)));
+        assert_eq!(u5::try_from(u6(29)), Ok(u5(29)));
 
         assert!(u16::try_from(u19(0x1_ffff)).is_err());
-        assert!(u32::try_from(u39(0x1_fffff_ffff)).is_err());
+        assert!(u32::try_from(u39(0x001f_ffff_ffff)).is_err());
 
         assert!(u6::try_from(u7(127)).is_err());
 
@@ -1818,16 +1818,16 @@ mod tests {
 
     #[test]
     fn test_fallible_conversion_signed() {
-        assert_eq!(i16::try_from(i9(12)), Ok(12i16));
-        assert_eq!(i32::try_from(i9(12)), Ok(12i32));
+        assert_eq!(i7::try_from(i9(12)), Ok(i7(12)));
+        assert_eq!(i9::try_from(i10(12)), Ok(i9(12)));
 
-        assert_eq!(i16::try_from(i9(-12)), Ok(-12i16));
-        assert_eq!(i32::try_from(i9(-12)), Ok(-12i32));
+        assert_eq!(i7::try_from(i9(-12)), Ok(i7(-12)));
+        assert_eq!(i9::try_from(i10(-12)), Ok(i9(-12)));
 
-        assert_eq!(127i8.try_into(), Ok(i9(127)));
+        assert_eq!(127i16.try_into(), Ok(i9(127)));
 
-        assert_eq!(i7::try_from(i6(65)), Ok(i7(65)));
-        assert_eq!(i7::try_from(i6(-65)), Ok(i7(-65)));
+        assert_eq!(i7::try_from(i9(63)), Ok(i7(63)));
+        assert_eq!(i7::try_from(i9(-63)), Ok(i7(-63)));
 
         assert!(i16::try_from(i19(0xffff)).is_err());
         assert!(i32::try_from(i39(0xffff_ffff)).is_err());
