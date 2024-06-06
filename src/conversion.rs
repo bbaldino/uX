@@ -161,8 +161,9 @@ implement_into!([u41, u42, u43, u44, u45, u46, u47, u48], u64);
 implement_into!([u49, u50, u51, u52, u53, u54, u55, u56], u64);
 implement_into!([u57, u58, u59, u60, u61, u62, u63], u64);
 
-implement_try_into!([u1, u2, u3, u4, u5, u6, u7], usize);
-implement_try_into!([u9, u10, u11, u12, u13, u14, u15], usize);
+implement_into!([u1, u2, u3, u4, u5, u6, u7], usize);
+implement_into!([u9, u10, u11, u12, u13, u14, u15], usize);
+
 implement_try_into!([u17, u18, u19, u20, u21, u22, u23, u24], usize);
 implement_try_into!([u25, u26, u27, u28, u29, u30, u31], usize);
 implement_try_into!([u33, u34, u35, u36, u37, u38, u39, u40], usize);
@@ -1806,7 +1807,7 @@ mod tests {
 
         assert_eq!(u2::try_from(1usize), Ok(u2(1)));
         assert!(u2::try_from(4usize).is_err());
-        assert_eq!(u2(1).try_into(), Ok(1usize));
+        assert_eq!(u17(1).try_into(), Ok(1usize));
 
         // Make sure that uX types behave the same as standard types with regards to usize
         // conversion.
